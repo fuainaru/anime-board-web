@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import isEmpty from "lodash/isEmpty";
 import { Inter } from "next/font/google";
 
 import {
@@ -20,26 +21,37 @@ const inter = Inter({ subsets: ["latin"] });
 const Home: React.FC<HomeProps> = (props) => {
   const { data } = props;
 
-  const [search, setSearch] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [searchData, setSearchData] = useState<ResponseAnimePosts[]>([]);
 
-  const onSubmitSearch = useCallback(() => {
-    console.log(search);
-  }, [search]);
+  const dataResult = useMemo(() => {
+    if (isEmpty(searchData)) {
+      return data;
+    }
+    return searchData;
+  }, [data, searchData]);
+
+  const onSubmitSearch = useCallback(async () => {
+    const response = await fetch("/api/search?tags=" + searchValue);
+    const data: ResponseAnimePosts[] = await response.json();
+    console.log(data);
+    return setSearchData(data);
+  }, [searchValue]);
 
   return (
     <main className="px-20 bg-[#2e2e36]" style={inter.style}>
-      <div className="py-5">
+      <div className="flex items-center justify-center py-5">
         <Search
           placeholder="Search Anime by Hashtag"
-          value={search}
-          onChange={setSearch}
+          value={searchValue}
+          onChange={setSearchValue}
           onSubmit={onSubmitSearch}
         />
       </div>
 
       <div className="grid grid-cols-3 gap-x-5">
-        {data.map((anime, id) => (
-          <AnimeCard key={id} data={anime}>
+        {dataResult.map((anime) => (
+          <AnimeCard key={anime.id} data={anime}>
             <AnimeCardImage />
             <AnimeCardTitle />
           </AnimeCard>
