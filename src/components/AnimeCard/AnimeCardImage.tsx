@@ -8,7 +8,7 @@ const AnimeCardImage = () => {
   const { anime } = useAnimeCardContext();
 
   return (
-    <div className="relative h-[20rem] w-[40rem]">
+    <div className="relative w-full h-72">
       <Image
         className="object-cover rounded-md"
         src={anime.sample_url}

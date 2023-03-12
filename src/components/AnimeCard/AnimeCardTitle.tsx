@@ -1,7 +1,5 @@
 "use client";
 
-import { Fragment } from "react";
-
 import { useAnimeCardContext } from "./AnimeCardContext";
 
 const AnimeCardTitle = () => {
@@ -11,18 +9,17 @@ const AnimeCardTitle = () => {
   const sliceTags = splitTags.slice(0, 3);
 
   return (
-    <div className="w-[40rem]">
+    <div className="flex items-center gap-2 overflow-hidden my-3">
       {sliceTags.map((tag, id) => (
-        <span
+        <div
           key={id}
-          className="text-xs text-white bg-slate-400 rounded-md p-3 m-2"
+          className="py-1 px-3 bg-[#383840] text-white rounded-full"
         >
-          {tag}
-        </span>
+          <p className="text-xs">{tag}</p>
+        </div>
       ))}
     </div>
   );
-  // return <p className="w-[40rem] truncate">{anime.tags}</p>;
 };
 
 export default AnimeCardTitle;

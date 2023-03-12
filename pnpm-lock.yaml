@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@iconscout/react-unicons': ^2.0.0
   '@types/lodash': ^4.14.191
   '@types/node': 18.15.0
   '@types/react': 18.0.28
@@ -19,6 +20,7 @@ specifiers:
   typescript: 4.9.5
 
 dependencies:
+  '@iconscout/react-unicons': 2.0.0_react@18.2.0
   '@types/node': 18.15.0
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -96,6 +98,14 @@ packages:
 
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+
+  /@iconscout/react-unicons/2.0.0_react@18.2.0:
+    resolution: {integrity: sha512-C2zMwesxHTPtksmkQdqQCvDgbveWx9EveB1NdUD2XhuH4tupaEaNdMOG6Wltyx+6oJHW1XCTMxuA9fJKzNjNKw==}
+    peerDependencies:
+      react: '>=15.0.0 <17.0.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /@next/env/13.2.4:
     resolution: {integrity: sha512-+Mq3TtpkeeKFZanPturjcXt+KHfKYnLlX6jMLyCrmpq6OOs4i1GqBOAauSkii9QeKCMTYzGppar21JU57b/GEA==}
