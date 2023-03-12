@@ -4,7 +4,6 @@ import { useAnimeCardContext } from "./AnimeCardContext";
 
 const AnimeCardTitle = () => {
   const { anime } = useAnimeCardContext();
-
   const splitTags = anime.tags.split(" ");
   const sliceTags = splitTags.slice(0, 3);
 
