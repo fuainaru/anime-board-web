@@ -12,6 +12,7 @@ import {
   AnimeCardTitle,
   Search,
 } from "@/components";
+import { api } from "@/services";
 import { ResponseAnimePosts } from "@/types";
 
 interface HomeProps {
@@ -44,23 +45,24 @@ const Home: React.FC<HomeProps> = (props) => {
   }, []);
 
   const onSubmitSearch = useCallback(async () => {
-    const response = await fetch(`/api/search?tags=${searchValue}`);
-    const data: ResponseAnimePosts[] = await response.json();
+    const data = await api<ResponseAnimePosts[]>(
+      `/api/search?tags=${searchValue}`
+    );
     handleClearData();
     return setSearchData(data);
   }, [handleClearData, searchValue]);
 
   const onFetchPageDefaultData = useCallback(async () => {
-    const response = await fetch(`/api/default-page?page=${defaultPage}`);
-    const data = await response.json();
+    const data = await api<ResponseAnimePosts[]>(
+      `/api/default-page?page=${defaultPage}`
+    );
     return setDefaultData((prevValue) => concat(prevValue, data));
   }, [defaultPage]);
 
   const onFetchPageSearchData = useCallback(async () => {
-    const response = await fetch(
+    const data = await api<ResponseAnimePosts[]>(
       `/api/tags-page?tags=${searchValue}&page=${searchPage}`
     );
-    const data = await response.json();
     return setSearchData((prevValue) => concat(prevValue, data));
   }, [searchPage, searchValue]);
 
