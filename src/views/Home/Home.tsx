@@ -81,10 +81,11 @@ const Home: React.FC<HomeProps> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
-  console.log(dataResult);
-
   return (
-    <main className="px-5 md:px-20 bg-[#2e2e36] py-5" style={inter.style}>
+    <main
+      className="px-5 md:px-20 bg-[#2e2e36] py-5 min-h-screen"
+      style={inter.style}
+    >
       <h1 className="text-center font-semibold text-white text-3xl">
         AnimeBoard
       </h1>
