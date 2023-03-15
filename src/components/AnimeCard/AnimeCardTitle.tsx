@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 // @ts-ignore
 import IconLeft from "@iconscout/react-unicons/icons/uil-angle-left";
 // @ts-ignore
@@ -14,30 +14,66 @@ const AnimeCardTitle = () => {
   const { anime } = useAnimeCardContext();
 
   const ref = useRef<HTMLDivElement>(null);
+  const [scrollX, setScrollX] = useState(0);
+  const [scrollEnd, setScrollEnd] = useState(false);
 
   const tags = useMemo(() => {
     return anime.tags.split(" ");
   }, [anime.tags]);
 
-  const onScrollLeft = useCallback(() => {
+  const onCheckScrollEnd = useCallback(() => {
     if (ref.current) {
-      ref.current.scrollLeft += -SCROLL_NUMBER;
+      const isScrollEnd =
+        Math.floor(ref.current.scrollWidth - ref.current.scrollLeft) <=
+        ref.current.offsetWidth;
+
+      if (isScrollEnd) {
+        return setScrollEnd(true);
+      }
+
+      return setScrollEnd(false);
     }
   }, []);
 
-  const onScrollRight = useCallback(() => {
+  const onScroll = useCallback(
+    (shift: number) => {
+      if (ref.current) {
+        ref.current.scrollLeft += shift;
+        setScrollX((prevValue) => prevValue + shift);
+
+        return onCheckScrollEnd();
+      }
+    },
+    [onCheckScrollEnd]
+  );
+
+  useEffect(() => {
     if (ref.current) {
-      ref.current.scrollLeft += +SCROLL_NUMBER;
+      const isScrollEnd =
+        ref.current && ref.current.scrollWidth === ref.current.offsetWidth;
+
+      if (isScrollEnd) {
+        setScrollEnd(true);
+      } else {
+        setScrollEnd(false);
+      }
     }
-  }, []);
+
+    return () => {};
+  }, [ref.current?.scrollWidth, ref.current?.offsetWidth]);
 
   return (
     <div className="flex items-center justify-between my-3">
-      <IconLeft onClick={onScrollLeft} color="#797981" />
+      {scrollX !== 0 ? (
+        <div className="h-5 transition duration-700 ease-in-out">
+          <IconLeft onClick={() => onScroll(-SCROLL_NUMBER)} color="#797981" />
+        </div>
+      ) : null}
 
       <div
         ref={ref}
         className="flex items-center gap-2 overflow-x-scroll scroll-smooth no-scrollbar"
+        onScroll={onCheckScrollEnd}
       >
         {tags.map((tag, id) => (
           <div
@@ -49,11 +85,11 @@ const AnimeCardTitle = () => {
         ))}
       </div>
 
-      <IconRight
-        onClick={onScrollRight}
-        color="#797981"
-        className="!w-36 !h-5"
-      />
+      {!scrollEnd ? (
+        <div className="h-5">
+          <IconRight onClick={() => onScroll(+SCROLL_NUMBER)} color="#797981" />
+        </div>
+      ) : null}
     </div>
   );
 };
