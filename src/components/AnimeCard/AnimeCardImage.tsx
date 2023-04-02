@@ -16,10 +16,11 @@ const AnimeCardImage = () => {
       ) : null}
 
       <Image
-        className="object-cover rounded-md"
+        className="object-cover rounded-md cursor-pointer"
         src={anime.sample_url}
         alt={anime.file_url}
         onLoadingComplete={() => setIsLoading(false)}
+        onClick={() => window.open(anime.file_url)}
         fill
       />
     </div>
