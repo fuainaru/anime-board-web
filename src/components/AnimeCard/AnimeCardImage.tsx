@@ -20,7 +20,7 @@ const AnimeCardImage = () => {
         src={anime.sample_url}
         alt={anime.file_url}
         onLoadingComplete={() => setIsLoading(false)}
-        onClick={() => window.open(anime.file_url)}
+        onClick={() => window.open(anime.sample_url, "_blank")}
         fill
       />
     </div>
